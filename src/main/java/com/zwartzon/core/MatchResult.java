@@ -1,31 +1,57 @@
 package com.zwartzon.core;
 
 
-public class MatchResult {
-  public final int home_sets;
-  public final int away_sets;
-  public final int home_games;
-  public final int away_games;
-  public final int home_tiebreaks;
-  public final int away_tiebreaks;
-  public final String scoreboard;
+import java.util.List;
+import java.util.StringJoiner;
 
-  public MatchResult(
-      int home_sets,
-      int away_sets,
-      int home_games,
-      int away_games,
-      int home_tiebreaks,
-      int away_tiebreaks,
-      String scoreboard
-  ) {
+import static com.zwartzon.core.Util.BoolToShort;
 
-    this.home_sets = home_sets;
-    this.away_sets = away_sets;
-    this.home_games = home_games;
-    this.away_games = away_games;
-    this.home_tiebreaks = home_tiebreaks;
-    this.away_tiebreaks = away_tiebreaks;
-    this.scoreboard = scoreboard;
+
+class MatchResult {
+  private List<SetResult> set_results;
+
+  MatchResult(final List<SetResult> set_results) {
+    this.set_results = set_results;
+  }
+
+  short GetHomeSets() {
+    short res = 0;
+    for (var set : set_results) {
+      res += BoolToShort(set.home_games > set.away_games);
+    }
+    return res;
+  }
+
+  short GetHomeGames() {
+    short res = 0;
+    for (var set : set_results) {
+      res += set.home_games;
+    }
+    return res;
+  }
+
+  short GetAwaySets() {
+    short res = 0;
+    for (var set : set_results) {
+      res += BoolToShort(set.away_games > set.home_games);
+    }
+    return res;
+  }
+
+  short GetAwayGames() {
+    short res = 0;
+    for (var set : set_results) {
+      res += set.away_games;
+    }
+    return res;
+  }
+
+  @Override
+  public String toString() {
+    StringJoiner sb = new StringJoiner(" ");
+    for (var set : set_results) {
+      sb.add(set.toString());
+    }
+    return sb.toString();
   }
 }

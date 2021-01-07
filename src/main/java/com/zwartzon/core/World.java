@@ -24,16 +24,16 @@ public class World {
     is_deleted = true;
   }
 
-  public void NextDay() {
+  void NextDay() {
     calendar.add(Calendar.DATE, 1);
   }
 
-  public void NextYear() {
+  void NextYear() {
     var y = calendar.get(Calendar.YEAR);
-    SetStartOfSeason(y+1);
+    SetStartOfSeason(y + 1);
   }
 
-  public Calendar GetDate() {
+  Calendar GetDate() {
     var clone = Calendar.getInstance();
     clone.setTimeInMillis(calendar.getTimeInMillis());
     return clone;
@@ -45,7 +45,7 @@ public class World {
   }
 
   private void SetStartOfSeason(int year) {
-    // Each season starts on monday.
+    // Each season starts on the first Monday of February.
     calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
     calendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
     calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
