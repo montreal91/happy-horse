@@ -7,11 +7,9 @@ import java.util.Optional;
 interface Competition {
   boolean IsOver();
   boolean IsFinal();
-  List<String> GetParticipants();
-  void SetParticipants(List<String> participants);
-  List<String> GetPromotedParticipants();
   Optional<String> GetWinner();
-  List<CompetitionStandings> GetStandings();
+  CompetitionStandings GetStandings();
+  boolean CanUpdate();
   void Update();
 }
 
